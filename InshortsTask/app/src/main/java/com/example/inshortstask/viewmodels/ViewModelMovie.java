@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.viewmodels;
 
 import android.app.Application;
 
@@ -6,6 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.inshortstask.repository.MovieRepository;
+import com.example.inshortstask.entities.Movie;
+import com.example.inshortstask.entities.MovieDetails;
 
 import java.util.List;
 

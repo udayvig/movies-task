@@ -1,10 +1,9 @@
-package com.example.inshortstask;
+package com.example.inshortstask.activities;
 
 import static android.view.View.GONE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -15,19 +14,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.example.inshortstask.adapters.AdapterMovie;
+import com.example.inshortstask.entities.Movie;
+import com.example.inshortstask.entities.MovieDetails;
+import com.example.inshortstask.R;
+import com.example.inshortstask.viewmodels.ViewModelMovie;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterMovie.Communicate{
+public class ActivityHome extends AppCompatActivity implements AdapterMovie.Communicate {
 
     RecyclerView nowPlayingRecyclerView, popularRecyclerView;
     LinearLayout emptyNowPlayingLinearLayout, emptyPopularLinearLayout;
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         context = this;
 
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
 
     @Override
     public void onOpenMovie(int position, int type) {
-        Intent intent = new Intent(MainActivity.this, ActivityMovieDetails.class);
+        Intent intent = new Intent(ActivityHome.this, ActivityMovieDetails.class);
 
         Log.e("TAG", "onOpenMovie: ");
         if(type == 0){
@@ -154,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
     public void onBookmarkMovie(int position, int type) {
         if(type == 0){
             Log.e("TAG", "onBookmarkMovie: " + popularMoviesList.get(position).toString());
-            movieVM.getMovieDetails(popularMoviesList.get(position).getId()).observe(MainActivity.this, new Observer<MovieDetails>() {
+            movieVM.getMovieDetails(popularMoviesList.get(position).getId()).observe(ActivityHome.this, new Observer<MovieDetails>() {
                 @Override
                 public void onChanged(MovieDetails movieDetails) {
                     movieVM.insertMovie(movieDetails);
@@ -162,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
             });
         }else if(type == 1){
             Log.e("TAG", "onBookmarkMovie: " + nowPlayingMoviesList.get(position).toString());
-            movieVM.getMovieDetails(nowPlayingMoviesList.get(position).getId()).observe(MainActivity.this, new Observer<MovieDetails>() {
+            movieVM.getMovieDetails(nowPlayingMoviesList.get(position).getId()).observe(ActivityHome.this, new Observer<MovieDetails>() {
                 @Override
                 public void onChanged(MovieDetails movieDetails) {
                     movieVM.insertMovie(movieDetails);
@@ -175,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
     public void onDeleteBookmarkedMovie(int position, int type) {
         if(type == 0){
             Log.e("TAG", "onBookmarkMovie: " + popularMoviesList.get(position).toString());
-            movieVM.getMovieDetails(popularMoviesList.get(position).getId()).observe(MainActivity.this, new Observer<MovieDetails>() {
+            movieVM.getMovieDetails(popularMoviesList.get(position).getId()).observe(ActivityHome.this, new Observer<MovieDetails>() {
                 @Override
                 public void onChanged(MovieDetails movieDetails) {
                     movieVM.deleteMovie(movieDetails);
@@ -183,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
             });
         }else if(type == 1){
             Log.e("TAG", "onBookmarkMovie: " + nowPlayingMoviesList.get(position).toString());
-            movieVM.getMovieDetails(nowPlayingMoviesList.get(position).getId()).observe(MainActivity.this, new Observer<MovieDetails>() {
+            movieVM.getMovieDetails(nowPlayingMoviesList.get(position).getId()).observe(ActivityHome.this, new Observer<MovieDetails>() {
                 @Override
                 public void onChanged(MovieDetails movieDetails) {
                     movieVM.deleteMovie(movieDetails);
@@ -208,11 +211,11 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_search:
-                startActivity(new Intent(MainActivity.this, ActivitySearchResults.class));
+                startActivity(new Intent(ActivityHome.this, ActivitySearchResults.class));
                 break;
 
             case R.id.action_to_bookmark:
-                startActivity(new Intent(MainActivity.this, ActivityBookmarkedMovies.class));
+                startActivity(new Intent(ActivityHome.this, ActivityBookmarkedMovies.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

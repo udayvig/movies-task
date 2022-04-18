@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -7,6 +7,11 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.inshortstask.APIInterface;
+import com.example.inshortstask.dao.MovieDao;
+import com.example.inshortstask.MovieDatabase;
+import com.example.inshortstask.entities.Movie;
+import com.example.inshortstask.entities.MovieDetails;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

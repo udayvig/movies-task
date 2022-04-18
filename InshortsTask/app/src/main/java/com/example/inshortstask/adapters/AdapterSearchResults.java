@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.inshortstask.entities.Movie;
+import com.example.inshortstask.R;
 
 import java.util.List;
 

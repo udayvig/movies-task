@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -7,15 +7,14 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import java.util.List;
+import com.example.inshortstask.entities.MovieDetails;
+import com.example.inshortstask.R;
+import com.example.inshortstask.viewmodels.ViewModelMovie;
 
 public class ActivityMovieDetails extends AppCompatActivity {
 

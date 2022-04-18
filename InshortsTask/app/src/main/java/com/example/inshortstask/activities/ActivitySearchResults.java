@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +15,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.inshortstask.adapters.AdapterSearchResults;
+import com.example.inshortstask.entities.Movie;
+import com.example.inshortstask.R;
+import com.example.inshortstask.viewmodels.ViewModelMovie;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivitySearchResults extends AppCompatActivity implements AdapterSearchResults.CommunicateSearch{
+public class ActivitySearchResults extends AppCompatActivity implements AdapterSearchResults.CommunicateSearch {
 
     public TextView searchStringTextView;
     public RecyclerView resultsRecyclerView;

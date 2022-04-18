@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.inshortstask.entities.MovieDetails;
+import com.example.inshortstask.R;
 
 import java.util.List;
 

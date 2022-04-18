@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,6 +6,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.example.inshortstask.entities.Movie;
+import com.example.inshortstask.entities.MovieDetails;
 
 import java.util.List;
 

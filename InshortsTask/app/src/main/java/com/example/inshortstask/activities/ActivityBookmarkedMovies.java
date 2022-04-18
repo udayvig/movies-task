@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,9 +19,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.inshortstask.adapters.AdapterBookmarkedMovie;
+import com.example.inshortstask.entities.MovieDetails;
+import com.example.inshortstask.R;
+import com.example.inshortstask.viewmodels.ViewModelMovie;
+
 import java.util.List;
 
-public class ActivityBookmarkedMovies extends AppCompatActivity implements AdapterBookmarkedMovie.CommunicateBookmarks{
+public class ActivityBookmarkedMovies extends AppCompatActivity implements AdapterBookmarkedMovie.CommunicateBookmarks {
 
     private RecyclerView bookmarkedRecyclerView;
     private LinearLayout emptyBookmarkedLinearLayout;

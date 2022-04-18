@@ -1,4 +1,4 @@
-package com.example.inshortstask;
+package com.example.inshortstask.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
