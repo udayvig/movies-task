@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements AdapterMovie.Comm
         emptyNowPlayingLinearLayout = findViewById(R.id.emptyNowPlaying);
         emptyPopularLinearLayout = findViewById(R.id.emptyPopular);
 
-        //inject using dagger
         movieVM = new ViewModelProvider(this).get(ViewModelMovie.class);
 
         movieVM.getAllPopularMovies().observe(this, new Observer<List<Movie>>() {
