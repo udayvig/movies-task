@@ -92,7 +92,7 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.MovieViewHol
                 int id = movie.getId();
                 String link = convertID(id);
 
-                String url = "https://example.com/" + link;
+                String url = "https://www.example.com/" + link;
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);

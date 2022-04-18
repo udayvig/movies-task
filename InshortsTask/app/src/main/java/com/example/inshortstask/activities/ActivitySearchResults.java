@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.inshortstask.adapters.AdapterSearchResults;
 import com.example.inshortstask.entities.Movie;
 import com.example.inshortstask.R;
+import com.example.inshortstask.entities.MovieDetails;
 import com.example.inshortstask.viewmodels.ViewModelMovie;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class ActivitySearchResults extends AppCompatActivity implements AdapterS
     public ViewModelMovie movieVM;
 
     public List<Movie> results = new ArrayList<>();
+    List<Integer> bookmarkedMovieIDs = new ArrayList<>();
 
     public AdapterSearchResults adapterSearchResults;
 
@@ -58,6 +60,16 @@ public class ActivitySearchResults extends AppCompatActivity implements AdapterS
         emptyResultsLinearLayout = findViewById(R.id.emptySearchResults);
 
         movieVM = new ViewModelProvider(this).get(ViewModelMovie.class);
+
+        movieVM.getAllBookmarkedMovies().observe(this, new Observer<List<MovieDetails>>() {
+            @Override
+            public void onChanged(List<MovieDetails> movieDetails) {
+                bookmarkedMovieIDs.clear();
+                for(MovieDetails movieDetailsObject : movieDetails){
+                    bookmarkedMovieIDs.add(movieDetailsObject.getId());
+                }
+            }
+        });
     }
 
     @Override
@@ -127,5 +139,34 @@ public class ActivitySearchResults extends AppCompatActivity implements AdapterS
         Intent intent = new Intent(ActivitySearchResults.this, ActivityMovieDetails.class);
         intent.putExtra("id", results.get(position).getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBookmarkMovieSearch(int position) {
+        movieVM.getMovieDetails(results.get(position).getId()).observe(ActivitySearchResults.this,
+                new Observer<MovieDetails>() {
+            @Override
+            public void onChanged(MovieDetails movieDetails) {
+                movieVM.insertMovie(movieDetails);
+                bookmarkedMovieIDs.add(movieDetails.getId());
+            }
+        });
+    }
+
+    @Override
+    public void onDeleteBookmarkedMovieSearch(int position) {
+        movieVM.getMovieDetails(results.get(position).getId()).observe(ActivitySearchResults.this,
+                new Observer<MovieDetails>() {
+            @Override
+            public void onChanged(MovieDetails movieDetails) {
+                movieVM.deleteMovie(movieDetails);
+                bookmarkedMovieIDs.remove(movieDetails.getId());
+            }
+        });
+    }
+
+    @Override
+    public boolean checkIfBookmarkedSearch(int id) {
+        return bookmarkedMovieIDs.contains(id);
     }
 }

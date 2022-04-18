@@ -1,10 +1,12 @@
 package com.example.inshortstask.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +58,46 @@ public class AdapterSearchResults extends RecyclerView.Adapter<AdapterSearchResu
                 .load("https://image.tmdb.org/t/p/w500" + movie.getPosterPath())
                 .apply(options)
                 .into(holder.backgroundImageView);
+
+        if(communicate.checkIfBookmarkedSearch(movieList.get(position).getId())){
+            holder.bookmarkButton.setImageResource(R.drawable.ic_baseline_bookmark_24);
+        }else{
+            holder.bookmarkButton.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+        }
+
+        holder.bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tag = (String) holder.bookmarkButton.getTag();
+                if(tag == null || tag.equals("not_bookmarked")){
+                    holder.bookmarkButton.setTag("bookmarked");
+                    holder.bookmarkButton.setImageResource(R.drawable.ic_baseline_bookmark_24);
+                    communicate.onBookmarkMovieSearch(holder.getAdapterPosition());
+                }else if(tag.equals("bookmarked")){
+                    holder.bookmarkButton.setTag("not_bookmarked");
+                    holder.bookmarkButton.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+                    communicate.onDeleteBookmarkedMovieSearch(holder.getAdapterPosition());
+                }
+            }
+        });
+
+        holder.shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = movie.getId();
+                String link = convertID(id);
+
+                String url = "https://www.example.com/" + link;
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                context.startActivity(shareIntent);
+            }
+        });
     }
 
     @Override
@@ -76,6 +118,7 @@ public class AdapterSearchResults extends RecyclerView.Adapter<AdapterSearchResu
     public class SearchResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageView backgroundImageView;
         public TextView averageVoteTextView, numberVotesTextView, adultTextView, titleTextView, releaseDateTextView;
+        public ImageButton bookmarkButton, shareButton;
         public AdapterSearchResults.CommunicateSearch communicate;
 
         public SearchResultViewHolder(@NonNull View itemView, AdapterSearchResults.CommunicateSearch communicate) {
@@ -88,6 +131,8 @@ public class AdapterSearchResults extends RecyclerView.Adapter<AdapterSearchResu
             adultTextView = itemView.findViewById(R.id.adultTextView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             releaseDateTextView = itemView.findViewById(R.id.releaseDateTextView);
+            bookmarkButton = itemView.findViewById(R.id.bookmarkMovieButton);
+            shareButton = itemView.findViewById(R.id.shareButton);
 
             itemView.setOnClickListener(this);
         }
@@ -99,7 +144,23 @@ public class AdapterSearchResults extends RecyclerView.Adapter<AdapterSearchResu
         }
     }
 
+    public String convertID(int n) {
+        char[] map = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+
+        StringBuilder shorturl = new StringBuilder();
+
+        while (n > 0) {
+            shorturl.append(map[n % 62]);
+            n = n / 62;
+        }
+
+        return shorturl.reverse().toString();
+    }
+
     public interface CommunicateSearch{
         void onOpenMovieSearch(int position);
+        void onBookmarkMovieSearch(int position);
+        void onDeleteBookmarkedMovieSearch(int position);
+        boolean checkIfBookmarkedSearch(int id);
     }
 }

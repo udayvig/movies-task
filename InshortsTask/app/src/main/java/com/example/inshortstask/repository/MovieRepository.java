@@ -88,19 +88,27 @@ public class MovieRepository {
                         JsonObject obj = ele.getAsJsonObject();
                         Movie movie;
 
+                        String posterPath = "";
+                        String backdropPath = "";
+                        String releaseDate = "";
+
                         if(!obj.get("poster_path").isJsonNull()){
-                            movie = new Movie(obj.get("id").getAsInt(), obj.get("adult").getAsBoolean(),
-                                    obj.get("backdrop_path").getAsString(), obj.get("title").getAsString(),
-                                    obj.get("overview").getAsString(), obj.get("popularity").getAsDouble(),
-                                    obj.get("poster_path").getAsString(), obj.get("release_date").getAsString(),
-                                    obj.get("vote_average").getAsDouble(), obj.get("vote_count").getAsInt(), 0);
-                        }else{
-                            movie = new Movie(obj.get("id").getAsInt(), obj.get("adult").getAsBoolean(),
-                                    obj.get("backdrop_path").getAsString(), obj.get("title").getAsString(),
-                                    obj.get("overview").getAsString(), obj.get("popularity").getAsDouble(),
-                                    "", obj.get("release_date").getAsString(),
-                                    obj.get("vote_average").getAsDouble(), obj.get("vote_count").getAsInt(), 0);
+                            posterPath = obj.get("poster_path").getAsString();
                         }
+
+                        if(!obj.get("backdrop_path").isJsonNull()){
+                            backdropPath = obj.get("backdrop_path").getAsString();
+                        }
+
+                        if(!obj.get("release_date").isJsonNull()){
+                            releaseDate = obj.get("release_date").getAsString();
+                        }
+
+                        movie = new Movie(obj.get("id").getAsInt(), obj.get("adult").getAsBoolean(),
+                                backdropPath, obj.get("title").getAsString(),
+                                obj.get("overview").getAsString(), obj.get("popularity").getAsDouble(),
+                                posterPath, releaseDate,
+                                obj.get("vote_average").getAsDouble(), obj.get("vote_count").getAsInt(), 0);
 
                         fetchedMovies.add(movie);
                     }
